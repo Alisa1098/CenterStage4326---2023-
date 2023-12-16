@@ -11,6 +11,13 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.firstinspires.ftc.teamcode.SplitAveragePipeline;
 
 public class SplitAverageDetec {
+
+    static final double     COUNTS_PER_MOTOR_REV    = 1120;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+
     OpenCvCamera camera;
     SplitAveragePipeline splitAveragePipeline;
     int camW = 800;
@@ -50,6 +57,7 @@ public class SplitAverageDetec {
     }
 
     public void toggleAverageZone(){
+        //add auton code to release the hexagon onto the zone -- ask zeba how this would work
         splitAveragePipeline.toggleAverageZonePipe();
         if (splitAveragePipeline.get_element_zone() == zone1){
             //ZONE 1 CODE
@@ -59,13 +67,12 @@ public class SplitAverageDetec {
             //machine.update();
         } else if (splitAveragePipeline.get_element_zone()  == Zone2){
             //ZONE 2 CODE
-            encoderDrive(4.0, .75, 15.0, "Forward");
-            encoderDrive(4.0, .5, 12.0, "Left");
+            encoderDrive(4.0, .75, 30, "Forward");
             //machine.update();
         } else if (splitAveragePipeline.get_element_zone() == Zone3){
             //ZONE 3 CODE
-            encoderDrive(4.0, .75, 15.0, "Forward");
-            encoderDrive(4.0, .5, 12.0, "Left");
+            encoderDrive(4.0, .75, 20.0, "Forward");
+            encoderDrive(4.0, .5, 12.0, "Right");
             //machine.update();
         }
     }
