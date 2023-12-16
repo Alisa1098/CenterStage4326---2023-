@@ -55,4 +55,6 @@ public class Auton extends LinearOpMode {
         telemetry.update();
 
     }
+
+    }
 }

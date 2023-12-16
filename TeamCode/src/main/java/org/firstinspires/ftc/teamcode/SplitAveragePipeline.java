@@ -111,4 +111,22 @@ public class SplitAveragePipeline extends OpenCvPipeline {
         toggleShow = toggleShow * -1;
     }
 
+    /*  if (tagOfInterest == null || tagOfInterest.id == Zone2){
+            //ZONE 2 CODE
+            encoderDrive(4.0, .75, 15.0, "Forward");
+            //machine = new StatMachine(driveState);
+            //machine.update();
+        } else if (tagOfInterest.id == Zone1){
+            //ZONE 1 CODE
+            encoderDrive(4.0, .75, 15.0, "Forward");
+            encoderDrive(4.0, .5, 12.0, "Left");
+            //machine.update();
+        } else if (tagOfInterest.id == Zone3){
+            //ZONE 3 CODE
+            encoderDrive(4.0, .75, 15.0, "Forward");
+            encoderDrive(4.0, .5, 12.0, "Left");
+            //machine.update();
+        }
+
+     */
 }
