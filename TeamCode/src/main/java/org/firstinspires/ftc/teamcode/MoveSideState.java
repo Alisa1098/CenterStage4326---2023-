@@ -12,10 +12,10 @@ public class MoveSideState implements Stat {
     /*
    ---Motors---
     */
-    DcMotor LeftFront;
-    DcMotor RightFront;
-    DcMotor LeftBack;
-    DcMotor RightBack;
+    DcMotor frontLeft;
+    DcMotor frontRight;
+    DcMotor backLeft;
+    DcMotor backRight;
     //DcMotor Center;
 
     //The distance we want to travel, the speed we want to move at, and the distance translated into
@@ -37,10 +37,10 @@ public class MoveSideState implements Stat {
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
     public MoveSideState(ArrayList<DcMotor> motor, double distance, double speed, String d ){
-        LeftFront = motor.get(0);
-        RightFront = motor.get(1);
-        LeftBack = motor.get(2);
-        RightBack = motor.get(3);
+        frontLeft = motor.get(0);
+        frontRight = motor.get(1);
+        backLeft = motor.get(2);
+        backRight = motor.get(3);
         //Center = motor.get(4);
 
         dist = distance;
@@ -56,79 +56,79 @@ public class MoveSideState implements Stat {
 
     public void start(){
 
-        LeftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LeftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //Center.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        LeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //Center.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public Stat update(){
 
         encoderDrive(5);
-        stop(LeftFront, RightFront, LeftBack, RightBack);
+        stop(frontLeft, frontRight, backLeft, backRight);
         return nextState;
 
     }
     public void encoderDrive(double timeout) {
 
         if(direc.equals("Left") || direc.equals("Right")) {
-            target = LeftFront.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
+            target = frontLeft.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
         }
 
         if(direc.equals("Left")){
-            LeftFront.setTargetPosition(-target);
-            LeftBack.setTargetPosition(target);
-            RightFront.setTargetPosition(target);
-            RightBack.setTargetPosition(-target);
+            frontLeft.setTargetPosition(-target);
+            backLeft.setTargetPosition(target);
+            frontRight.setTargetPosition(target);
+            backRight.setTargetPosition(-target);
             //Center.setTargetPosition(target);
         }
         else if( direc.equals("Right")){
-            LeftFront.setTargetPosition(target);
-            LeftBack.setTargetPosition(-target);
-            RightFront.setTargetPosition(-target);
-            RightBack.setTargetPosition(target);
+            frontLeft.setTargetPosition(target);
+            backLeft.setTargetPosition(-target);
+            frontRight.setTargetPosition(-target);
+            backRight.setTargetPosition(target);
         }
 
 
         runtime.reset();
 
         if(direc.equals("left") || direc.equals("right")) {
-            LeftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            LeftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            RightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             //if target doesn't work then change the signs of the power:
             /*
             if(direc.equals("left"){
-                LeftFront.setPower(-power);
-                LeftBack.setPower(power);
-                RightFront.setPower(power);
-                RightBack.setPower(-power);
+                frontLeft.setPower(-power);
+                backLeft.setPower(power);
+                frontRight.setPower(power);
+                backRight.setPower(-power);
             }
             else {
-                LeftFront.setPower(power);
-                LeftBack.setPower(-power);
-                RightFront.setPower(-power);
-                RightBack.setPower(power);
+                frontLeft.setPower(power);
+                backLeft.setPower(-power);
+                frontRight.setPower(-power);
+                backRight.setPower(power);
 
             }
              */
-            LeftFront.setPower(power);
-            LeftBack.setPower(power);
-            RightFront.setPower(power);
-            RightBack.setPower(power);
+            frontLeft.setPower(power);
+            backLeft.setPower(power);
+            frontRight.setPower(power);
+            backRight.setPower(power);
 
-            while (LeftFront.isBusy()
-                    && RightFront.isBusy()
-                    && LeftBack.isBusy()
-                    && RightBack.isBusy()
+            while (frontLeft.isBusy()
+                    && frontRight.isBusy()
+                    && backLeft.isBusy()
+                    && backRight.isBusy()
                     && !(runtime.seconds() > timeout) ) {
             }
         }
@@ -137,15 +137,15 @@ public class MoveSideState implements Stat {
             Center.setPower(power);
             while (Center.isBusy() && !(runtime.seconds() > timeout)) {
             }
-            //stop(leftFront, rightFront, leftBack, rightBack, center);
+            //stop(frontLeft, frontRight, backLeft, backRight, center);
         }*/
 
-        stop(LeftFront, RightFront, LeftBack, RightBack);
+        stop(frontLeft, frontRight, backLeft, backRight);
 
-        LeftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LeftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //Center.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
@@ -153,7 +153,7 @@ public class MoveSideState implements Stat {
         return target;
     }
     public int GetPos(){
-        return LeftFront.getCurrentPosition();
+        return frontLeft.getCurrentPosition();
     }
 
     public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb) {

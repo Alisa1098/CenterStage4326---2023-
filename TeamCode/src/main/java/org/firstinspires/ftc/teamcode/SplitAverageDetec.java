@@ -24,7 +24,6 @@ public class SplitAverageDetec {
     int camH = 448;
 
     int zone = 1;
-
     public SplitAverageDetec(HardwareMap hardwareMap){
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
         splitAveragePipeline = new SplitAveragePipeline();
@@ -46,9 +45,11 @@ public class SplitAverageDetec {
         });
     }
 
+    //setting alliance side (red or blue)
     public void setAlliance(String alliance){
         splitAveragePipeline.setAlliancePipe(alliance);
     }
+
 
     public int elementDetection(Telemetry telemetry) {
         zone = splitAveragePipeline.get_element_zone();
@@ -59,21 +60,5 @@ public class SplitAverageDetec {
     public void toggleAverageZone(){
         //add auton code to release the hexagon onto the zone -- ask zeba how this would work
         splitAveragePipeline.toggleAverageZonePipe();
-        if (splitAveragePipeline.get_element_zone() == zone1){
-            //ZONE 1 CODE
-            encoderDrive(4.0, .75, 20.0, "Forward");
-            encoderDrive(4.0, 0.75, 12.0, "Left");
-            //machine = new StatMachine(driveState);
-            //machine.update();
-        } else if (splitAveragePipeline.get_element_zone()  == Zone2){
-            //ZONE 2 CODE
-            encoderDrive(4.0, .75, 30, "Forward");
-            //machine.update();
-        } else if (splitAveragePipeline.get_element_zone() == Zone3){
-            //ZONE 3 CODE
-            encoderDrive(4.0, .75, 20.0, "Forward");
-            encoderDrive(4.0, .5, 12.0, "Right");
-            //machine.update();
-        }
     }
 }

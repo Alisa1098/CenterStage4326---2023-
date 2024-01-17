@@ -57,4 +57,3 @@ public class Auton extends LinearOpMode {
     }
 
     }
-}
