@@ -30,7 +30,7 @@ public class AutonRun extends LinearOpMode {
     private DcMotor backRight;
 
     //uncomment if we decide to do the backdrop
-    //private DcMotor pully;
+    private DcMotor pully;
 
     //  IS IT POSSIBLE TO ADJUST THIS WITH THE ALLIANCE?
     boolean isBackStage = false;
@@ -40,6 +40,9 @@ public class AutonRun extends LinearOpMode {
 
     private Servo SallyTheLClaw;
     boolean isOpenL = false;
+
+    private Servo tilt;
+    boolean isTilt = false;
 
     //do i need this:
     boolean low_sens = false;
@@ -77,8 +80,11 @@ public class AutonRun extends LinearOpMode {
         SallyTheRClaw= hardwareMap.get(Servo.class, "Rclaw");
         SallyTheLClaw= hardwareMap.get(Servo.class, "Lclaw");
 
-        //Pully initializing - UNCOMMENT THIS IF WE ADD THE BACKDROP THING
-        //pully = hardwareMap.get(DcMotor.class, "lift");
+        //tilt servo initializing
+        tilt = hardwareMap.get(Servo.class, "tilt");
+
+        //Pully initializing
+        pully = hardwareMap.get(DcMotor.class, "lift");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -121,22 +127,31 @@ public class AutonRun extends LinearOpMode {
 
         while (!opModeIsActive() && !isStopRequested()) {
             element_zone = teamElementDetection.elementDetection(telemetry);
+
+            //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
             if(element_zone == 1){
                 //zone 1
                 encoderDrive(4.0, .75, 20.0, "Forward");
                 encoderDrive(4.0, 0.75, 12.0, "Left");
+                 //THIS IS AN ESTIMATION (TEST TO SEE WHAT THE POWER SHOULD ACTUALLY BE)
+                SallyTheRClaw. setPosition(1);
+
             }
             else if(element_zone == 2){
                 //zone 2
                 encoderDrive(4.0, .75, 15.0, "Forward");
-                encoderDrive(4.0, .5, 12.0, "Left");
+
+                SallyTheRClaw. setPosition(1);
             }
             else if(element_zone == 3){
-                //
+                //zone 3
                 encoderDrive(4.0, .75, 15.0, "Forward");
-                encoderDrive(4.0, .5, 12.0, "Left");
+                encoderDrive(4.0, .5, 12.0, "Right");
+                SallyTheRClaw. setPosition(1);
             }
-            //NEED TO ADD THE DRO
+
+            //NEED TO ADD THE DROp
+            //first add a wait function for the amount it takes to do the above
             //to drop the pixel:
             //if box: lift with lift motor and tilt the box with servo
             //if claw: open claw using servo

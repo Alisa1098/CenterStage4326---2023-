@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -68,6 +69,11 @@ public class Tele extends OpMode {
     private Servo SallyTheLClaw;
     boolean isOpenL = false;
 
+    private Servo tilt;
+    boolean isTilt = false;
+
+    private Servo airplane;
+
     boolean low_sens = false;
 
     private final double MAX_CAR_POWER = .5;
@@ -92,23 +98,33 @@ public class Tele extends OpMode {
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
+        motors[0] = frontLeft;
+        motors[1] = frontRight;
+        motors[2] = backLeft;
+        motors[3] = backRight;
+
+
         //Claw initializing
         SallyTheRClaw= hardwareMap.get(Servo.class, "Rclaw");
         SallyTheLClaw= hardwareMap.get(Servo.class, "Lclaw");
 
         //Pully initializing - UNCOMMENT THIS ONCE A 5TH MOTOR IS CONNECTED TO THE CONTROL HUB
-        //pully = hardwareMap.get(DcMotor.class, "lift");
+        pully = hardwareMap.get(DcMotor.class, "lift");
+
+        //tilting servo initialized
+        tilt = hardwareMap.get(Servo.class, "tilt");
+
+        //airplane launching servo initialization
+        airplane = hardwareMap.get(Servo.class, "airplane");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
     }
 
     /*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
-    @Override
-    public void init_loop() {
-    }
 
     /*
      * Code to run ONCE when the driver hits PLAY
@@ -161,8 +177,7 @@ public class Tele extends OpMode {
         backRight.setPower(rbDrive);
 
         // pully for the lift:
-
-        //pully.setPower(.5 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
+        pully.setPower(.5 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
 
         //claw:
         if(isOpenL == true  && gamepad1.left_bumper == true) {
@@ -170,9 +185,7 @@ public class Tele extends OpMode {
             wait(500);
             SallyTheLClaw.setPosition(0);
             isOpenL = false;
-
         }
-
         if(isOpenR == true  && gamepad1.right_bumper == true) {
             SallyTheRClaw.setPosition(1);
             wait(500);
@@ -180,9 +193,6 @@ public class Tele extends OpMode {
             isOpenR = false;
 
         }
-
-        //CHECK W/ DRIVERS AND HARDWARE IF PRESSING SAME BUTTON TO OPEN AND CLOSE IS OK
-        //OR SHOULD I ASSIGN OTHER BUTTONS?
         if (isOpenL == false && gamepad1.left_bumper == true) {
             SallyTheLClaw.setPosition(1);
             wait(500);
@@ -193,6 +203,21 @@ public class Tele extends OpMode {
             SallyTheRClaw.setPosition(1);
             wait(500);
             isOpenR = true;
+        }
+
+        if(isTilt == false && gamepad1.x == true){
+            tilt.setPosition(1); //FIND THE POSITION THIS HAS TO BE WHEN TESTING
+            isTilt = true;
+
+        }
+        if(isTilt == true && gamepad1.x == true){
+            tilt.setPosition(0); //FIND THE POSITION THIS HAS TO BE WHEN TESTING
+            isTilt = false;
+        }
+
+        //launching the airplane:
+        if(gamepad1.y == true){
+            airplane.setPosition(360); // MAKE IT TURN 360 DEGREES -- FIND THE POSITION IS HAS TO BE FOR THAT
         }
 
     }
