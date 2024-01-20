@@ -24,6 +24,7 @@ public class AutonRun extends LinearOpMode {
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
 
+    //initializing hardware motors and servos:
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backLeft;
@@ -150,7 +151,7 @@ public class AutonRun extends LinearOpMode {
                 SallyTheRClaw. setPosition(1);
             }
 
-            //NEED TO ADD THE DROp
+            //CAN ADD THE DROP AND PARK?
             //first add a wait function for the amount it takes to do the above
             //to drop the pixel:
             //if box: lift with lift motor and tilt the box with servo
