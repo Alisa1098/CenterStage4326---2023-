@@ -32,12 +32,6 @@ public class AutonRunPush extends LinearOpMode {
     //  IS IT POSSIBLE TO ADJUST THIS WITH THE ALLIANCE?
     boolean isBackStage = false;
 
-    private Servo SallyTheRClaw;
-    boolean isOpenR = false;
-
-    private Servo SallyTheLClaw;
-    boolean isOpenL = false;
-
     private Servo tilt;
     boolean isTilt = false;
 
@@ -72,10 +66,6 @@ public class AutonRunPush extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-
-        //Claw initializing
-        SallyTheRClaw= hardwareMap.get(Servo.class, "Rclaw");
-        SallyTheLClaw= hardwareMap.get(Servo.class, "Lclaw");
 
         //tilt servo initializing
         tilt = hardwareMap.get(Servo.class, "tilt");
@@ -128,24 +118,36 @@ public class AutonRunPush extends LinearOpMode {
             //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
             if(element_zone == 1){
                 //zone 1
-                encoderDrive(4.0, .75, 20.0, "Forward");
-                encoderDrive(4.0, 0.75, 12.0, "Left");
+                //adjust sideway  movement length
+                encoderDrive(4.0, .75, 20.0, "Backward");
+                encoderDrive(4.0, 0.75, 12.0, "Right");
                  //THIS IS AN ESTIMATION (TEST TO SEE WHAT THE POWER SHOULD ACTUALLY BE)
-                SallyTheRClaw. setPosition(1);
+
+                //reset position:
+                //want to go forward
+                encoderDrive(4.0, 0.75, 5.0, "Forward");
 
             }
             else if(element_zone == 2){
                 //zone 2
-                encoderDrive(4.0, .75, 15.0, "Forward");
+                encoderDrive(4.0, .75, 15.0, "Backward");
 
-                SallyTheRClaw. setPosition(1);
+                //reset position:
+                //want to go forward
+                encoderDrive(4.0, .75, 5.0, "Forward");
+
+
             }
             else if(element_zone == 3){
                 //zone 3
-                encoderDrive(4.0, .75, 15.0, "Forward");
-                encoderDrive(4.0, .5, 12.0, "Right");
-                SallyTheRClaw. setPosition(1);
+                encoderDrive(4.0, .75, 15.0, "Backward");
+                encoderDrive(4.0, .5, 12.0, "Left");
+
+                //to get back to a forward position that wont knock over pixel placed later:
+                //want to turn 90 degrees right
+                encoderDrive(4.0, .5, 5.0, "Forward");
             }
+
             //CAN ADD THE DROP AND PARK?
             //first add a wait function for the amount it takes to do the above
             //to drop the pixel:
@@ -220,6 +222,8 @@ public class AutonRunPush extends LinearOpMode {
             }
         }
     }
+
+    //put this at the end of encoder method
         public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb) {
             //robot stops moving
             motorlf.setPower(0.0);
