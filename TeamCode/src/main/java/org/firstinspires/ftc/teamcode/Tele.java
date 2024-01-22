@@ -217,7 +217,7 @@ public class Tele extends OpMode {
 
         //launching the airplane:
         if(gamepad1.y == true){
-            airplane.setPosition(360); // MAKE IT TURN 360 DEGREES -- FIND THE POSITION IS HAS TO BE FOR THAT
+            airplane.setPosition(1); //1 goes opposite direction as -1
         }
 
     }

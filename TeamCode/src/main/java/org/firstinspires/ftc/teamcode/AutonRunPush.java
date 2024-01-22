@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="auton run", group="Iterative Opmode")
-public class AutonRun extends LinearOpMode {
+public class AutonRunPush extends LinearOpMode {
 
     //  CHECK THESE MEASUREMENTS!!
     static final double FEET_PER_METER = 3.28084;
@@ -130,7 +130,7 @@ public class AutonRun extends LinearOpMode {
                 //zone 1
                 encoderDrive(4.0, .75, 20.0, "Forward");
                 encoderDrive(4.0, 0.75, 12.0, "Left");
-                //THIS IS AN ESTIMATION (TEST TO SEE WHAT THE POWER SHOULD ACTUALLY BE)
+                 //THIS IS AN ESTIMATION (TEST TO SEE WHAT THE POWER SHOULD ACTUALLY BE)
                 SallyTheRClaw. setPosition(1);
 
             }
@@ -220,12 +220,12 @@ public class AutonRun extends LinearOpMode {
             }
         }
     }
-    public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb) {
-        //robot stops moving
-        motorlf.setPower(0.0);
-        motorrf.setPower(0.0);
-        motorlb.setPower(0.0);
-        motorrb.setPower(0.0);
-    }
+        public void stop(DcMotor motorlf, DcMotor motorrf, DcMotor motorlb, DcMotor motorrb) {
+            //robot stops moving
+            motorlf.setPower(0.0);
+            motorrf.setPower(0.0);
+            motorlb.setPower(0.0);
+            motorrb.setPower(0.0);
+        }
 
 }
