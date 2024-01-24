@@ -115,32 +115,39 @@ public class AutonRunPush extends LinearOpMode {
         while (!opModeIsActive() && !isStopRequested()) {
             element_zone = teamElementDetection.elementDetection(telemetry);
 
+
+            //set element_zone to intended zone for testing
             //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
             if(element_zone == 1){
-                //zone 1
-                //adjust sideway  movement length
-                encoderDrive(4.0, .75, 20.0, "Backward");
+                //zone 1 (left zone)
+                    //distance from middle to the side zone is 13 inch
+                encoderDrive(4.0, .75, 20, "Backward");
                 encoderDrive(4.0, 0.75, 12.0, "Right");
-                 //THIS IS AN ESTIMATION (TEST TO SEE WHAT THE POWER SHOULD ACTUALLY BE)
 
                 //reset position:
-                //want to go forward
                 encoderDrive(4.0, 0.75, 5.0, "Forward");
 
             }
             else if(element_zone == 2){
-                //zone 2
-                encoderDrive(4.0, .75, 15.0, "Backward");
+                //zone 2 (front zone)
+
+                /*  the length from back to the tape line is 47 3/4
+                    the length from back to the tape line is 47 3/4 & robot length = 18 inch
+                    --> the distance travel length = 47 - 18 = 30 inch
+                    */
+
+                encoderDrive(4.0, .75, 30.0, "Backward");
 
                 //reset position:
-                //want to go forward
                 encoderDrive(4.0, .75, 5.0, "Forward");
 
 
             }
             else if(element_zone == 3){
-                //zone 3
-                encoderDrive(4.0, .75, 15.0, "Backward");
+                //zone 3 (right zone)
+
+                //distance from middle to the side zone is 13 inch
+                encoderDrive(4.0, .75, 20.0, "Backward");
                 encoderDrive(4.0, .5, 12.0, "Left");
 
                 //to get back to a forward position that wont knock over pixel placed later:
@@ -148,15 +155,32 @@ public class AutonRunPush extends LinearOpMode {
                 encoderDrive(4.0, .5, 5.0, "Forward");
             }
 
-            //CAN ADD THE DROP AND PARK?
-            //first add a wait function for the amount it takes to do the above
+            //first add a wait function for the amount it takes to do the above? - might not be needed
             //to drop the pixel:
             //if box: lift with lift motor and tilt the box with servo
             //if claw: open claw using servo
 
 
-            //PLACING ON BACKBOARD:
+            //PLACING ON BACKBOARD:(could add the prev ifs but want to separate)
+                //different between different alliances bc it would be mirror - imaged
+            if(curAlliance.equals("blue")) {
+                if (element_zone == 1) {
+                    //currently
+                } else if (element_zone == 2) {
 
+                } else if (element_zone == 3) {
+
+                }
+            }
+            else if(curAlliance.equals("red")){
+                if (element_zone == 1) {
+                    //left off
+                } else if (element_zone == 2) {
+
+                } else if (element_zone == 3) {
+
+                }
+            }
 
 
             //PARKING:
