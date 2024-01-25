@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import org.firstinspires.ftc.teamcode.SplitAveragePipeline;
 
@@ -43,9 +44,9 @@ public class TeamElementSubsystem {
         splitAveragePipeline.setAlliancePipe(alliance);
     }
 
-    public int elementDetection(Telemetry telemetry) {
+    public int elementDetection() {
         zone = splitAveragePipeline.get_element_zone();
-        telemetry.addData("Element Zone", zone);
+        //telemetry.addData("Element Zone", zone);
         return zone;
     }
 

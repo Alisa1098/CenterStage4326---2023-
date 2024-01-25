@@ -98,10 +98,10 @@ public class Tele extends OpMode {
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
-        motors[0] = frontLeft;
+        /*motors[0] = frontLeft;
         motors[1] = frontRight;
         motors[2] = backLeft;
-        motors[3] = backRight;
+        motors[3] = backRight;*/
 
 
         //Claw initializing

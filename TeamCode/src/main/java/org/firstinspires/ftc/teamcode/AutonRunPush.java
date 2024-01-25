@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.ArrayList;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @Autonomous(name="auton run", group="Iterative Opmode")
 public class AutonRunPush extends LinearOpMode {
 
@@ -51,150 +54,150 @@ public class AutonRunPush extends LinearOpMode {
 
     boolean togglePreview = true;
 
+    String curAlliance = "";
+
     public void HardwareStart() {
 
         //hardware map:
         telemetry.addData("Status", "Initializing");
 
-        // DRIVING
+        // DRIVING */
         frontLeft = hardwareMap.get(DcMotor.class, "fl");
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
-        backRight = hardwareMap.get(DcMotor.class, "br");
+        backRight = hardwareMap.get(DcMotor.class, "br"); /*
 
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
+       /* frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);*/
 
         //tilt servo initializing
-        tilt = hardwareMap.get(Servo.class, "tilt");
+        /*tilt = hardwareMap.get(Servo.class, "tilt");
 
         //Pully initializing
-        pully = hardwareMap.get(DcMotor.class, "lift");
+        //pully = hardwareMap.get(DcMotor.class, "lift");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
 
-        //grouping driving motors together
+        //grouping driving motors together*/
         motors.add(frontLeft);
         motors.add(frontRight);
         motors.add(backLeft);
         motors.add(backRight);
-
+/*
         //copied this from henry's hardwareStart method - ask him what he wanted to do with this?
         telemetry.addData("Object Creation", "Start");
-        telemetry.update();
+        telemetry.update(); */
 
         teamElementDetection = new TeamElementSubsystem(hardwareMap);
 
         telemetry.addData("Object Creation", "Done");
         telemetry.update();
+
     }
 
     public void runOpMode() {
-        HardwareStart();
-
-        //selecting alliance:
-        telemetry.addData("Select Alliance (Gamepad1 X = Blue, Gamepad1 B = Red)", "");
-        telemetry.update();
-
-        String curAlliance = "";
-        if (gamepad1.x) {
-            curAlliance = "blue";
-        } else if (gamepad1.b) {
-            curAlliance = "red";
-        }
-        //SET IF YOU ARE BACK STAGE OR FRONT STAGE HERE WITH THE BOOLEAN VARIABLE
-        // if () {isBackStage = }
-        // else if () {isBackStage = }
-
-        telemetry.addData("Current Alliance Selected : ", curAlliance.toUpperCase());
-        telemetry.update();
 
         while (!opModeIsActive() && !isStopRequested()) {
-            element_zone = teamElementDetection.elementDetection(telemetry);
+            //selecting alliance:
+            telemetry.addData("Select Alliance (Gamepad1 X = Blue, Gamepad1 B = Red)", "");
+            telemetry.update();
 
-
-            //set element_zone to intended zone for testing
-            //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
-            if(element_zone == 1){
-                //zone 1 (left zone)
-                    //distance from middle to the side zone is 13 inch
-                encoderDrive(4.0, .75, 20, "Backward");
-                encoderDrive(4.0, 0.75, 12.0, "Right");
-
-                //reset position:
-                encoderDrive(4.0, 0.75, 5.0, "Forward");
-
+            if (gamepad1.x) {
+                curAlliance = "blue";
+            } else if (gamepad1.b) {
+                curAlliance = "red";
             }
-            else if(element_zone == 2){
-                //zone 2 (front zone)
+            //SET IF YOU ARE BACK STAGE OR FRONT STAGE HERE WITH THE BOOLEAN VARIABLE
+            // if () {isBackStage = }
+            // else if () {isBackStage = }
+
+            telemetry.addData("Current Alliance Selected  : ", curAlliance.toUpperCase());
+            telemetry.update();
+        }
+
+        waitForStart();
+        //Telemetry telemetry = new Telemetry();
+        element_zone = teamElementDetection.elementDetection();
+
+        //set element_zone to intended zone for testing
+        //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
+        if(element_zone == 1){
+            //zone 1 (left zone)
+            //distance from middle to the side zone is 13 inch
+            encoderDrive(4.0, .75, 20, "Backward");
+            encoderDrive(4.0, 0.75, 12.0, "Right");
+
+            //reset position:
+            encoderDrive(4.0, 0.75, 5.0, "Forward");
+
+        }
+        else if(element_zone == 2){
+            //zone 2 (front zone)
 
                 /*  the length from back to the tape line is 47 3/4
                     the length from back to the tape line is 47 3/4 & robot length = 18 inch
                     --> the distance travel length = 47 - 18 = 30 inch
                     */
 
-                encoderDrive(4.0, .75, 30.0, "Backward");
+            encoderDrive(4.0, .75, 30.0, "Backward");
 
-                //reset position:
-                encoderDrive(4.0, .75, 5.0, "Forward");
-
-
-            }
-            else if(element_zone == 3){
-                //zone 3 (right zone)
-
-                //distance from middle to the side zone is 13 inch
-                encoderDrive(4.0, .75, 20.0, "Backward");
-                encoderDrive(4.0, .5, 12.0, "Left");
-
-                //to get back to a forward position that wont knock over pixel placed later:
-                //want to turn 90 degrees right
-                encoderDrive(4.0, .5, 5.0, "Forward");
-            }
-
-            //first add a wait function for the amount it takes to do the above? - might not be needed
-            //to drop the pixel:
-            //if box: lift with lift motor and tilt the box with servo
-            //if claw: open claw using servo
+            //reset position:
+            encoderDrive(4.0, .75, 5.0, "Forward");
 
 
-            //PLACING ON BACKBOARD:(could add the prev ifs but want to separate)
-                //different between different alliances bc it would be mirror - imaged
-            if(curAlliance.equals("blue")) {
-                if (element_zone == 1) {
-                    //currently
-                } else if (element_zone == 2) {
-
-                } else if (element_zone == 3) {
-
-                }
-            }
-            else if(curAlliance.equals("red")){
-                if (element_zone == 1) {
-                    //left off
-                } else if (element_zone == 2) {
-
-                } else if (element_zone == 3) {
-
-                }
-            }
-
-
-            //PARKING:
-            //version after placing pixel on board:
-            //version after placing pixel in zones
-
-
-
-            //CAN ADD THE DROP AND PARK?
-            //first add a wait function for the amount it takes to do the above
-            //to drop the pixel:
-            //if box: lift with lift motor and tilt the box with servo
-            //if claw: open claw using servo
         }
+        else if(element_zone == 3){
+            //zone 3 (right zone)
+
+            //distance from middle to the side zone is 13 inch
+            encoderDrive(4.0, .75, 20.0, "Backward");
+            encoderDrive(4.0, .5, 12.0, "Left");
+
+            //to get back to a forward position that wont knock over pixel placed later:
+            //want to turn 90 degrees right
+            encoderDrive(4.0, .5, 5.0, "Forward");
+        }
+
+        //first add a wait function for the amount it takes to do the above? - might not be needed
+        //to drop the pixel:
+        //if box: lift with lift motor and tilt the box with servo
+        //if claw: open claw using servo
+
+
+        //PLACING ON BACKBOARD:(could add the prev ifs but want to separate)
+        //different between different alliances bc it would be mirror - imaged
+       /* if(curAlliance.equals("blue")) {
+            if (element_zone == 1) {
+                //currently
+            } else if (element_zone == 2) {
+
+            } else if (element_zone == 3) {
+
+            }
+        }
+        else if(curAlliance.equals("red")){
+            if (element_zone == 1) {
+                //left off
+            } else if (element_zone == 2) {
+
+            } else if (element_zone == 3) {
+
+            }*/
+
+        //PARKING:
+        //version after placing pixel on board:
+        //version after placing pixel in zones
+
+
+
+        //CAN ADD THE DROP AND PARK?
+        //first add a wait function for the amount it takes to do the above
+        //to drop the pixel:
+        //if box: lift with lift motor and tilt the box with servo
+        //if claw: open claw using servo
 
         //telling user that robot is waiting to start
         telemetry.addData("Object", "Passed & waiting for start");
