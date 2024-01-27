@@ -61,13 +61,10 @@ public class Tele extends OpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
 
-    private DcMotor pully;
+    private DcMotor lift;
 
-    private Servo SallyTheRClaw;
-    boolean isOpenR = false;
-
-    private Servo SallyTheLClaw;
-    boolean isOpenL = false;
+    private DcMotor intake;
+    boolean intakeOn = false;
 
     private Servo tilt;
     boolean isTilt = false;
@@ -105,11 +102,15 @@ public class Tele extends OpMode {
 
 
         //Claw initializing
-        SallyTheRClaw= hardwareMap.get(Servo.class, "Rclaw");
-        SallyTheLClaw= hardwareMap.get(Servo.class, "Lclaw");
+        /*SallyTheRClaw= hardwareMap.get(Servo.class, "Rclaw");
+        SallyTheLClaw= hardwareMap.get(Servo.class, "Lclaw");*/
 
         //Pully initializing - UNCOMMENT THIS ONCE A 5TH MOTOR IS CONNECTED TO THE CONTROL HUB
-        pully = hardwareMap.get(DcMotor.class, "lift");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+
+        //intake motor
+        intake = hardwareMap.get(DcMotor.class, "intake");
+
 
         //tilting servo initialized
         tilt = hardwareMap.get(Servo.class, "tilt");
@@ -129,6 +130,7 @@ public class Tele extends OpMode {
     /*
      * Code to run ONCE when the driver hits PLAY
      */
+
     @Override
     public void start() {
 
@@ -142,18 +144,17 @@ public class Tele extends OpMode {
     public void loop() {
         // DRIVING
 
-       /* code that reduces power code from last yr:
+        //reduces powerof the robot:
         if (gamepad1.b) {
-
             low_sens = true;
         } else if (gamepad1.a) {
             low_sens = false;
         }
-        */
+
 
         double drive;
         double strafe;
-        double lift;
+        //double lift;
         double turn;
 
         drive = -gamepad1.left_stick_y;
@@ -176,47 +177,43 @@ public class Tele extends OpMode {
         frontRight.setPower(rfDrive);
         backRight.setPower(rbDrive);
 
-        // pully for the lift:
-        pully.setPower(.5 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
+        // lift for the lift:
+        lift.setPower((0.5 * ((double) gamepad2.right_trigger - (double) gamepad2.left_trigger)));
 
-        //claw:
-        if(isOpenL == true  && gamepad1.left_bumper == true) {
-            SallyTheLClaw.setPosition(1);
-            wait(500);
-            SallyTheLClaw.setPosition(0);
-            isOpenL = false;
+        //intake motor: might wanna trouble shoot this
+        if(gamepad2.y && intakeOn == false){
+            intake.setPower(1.00);
+            intakeOn = true;
         }
-        if(isOpenR == true  && gamepad1.right_bumper == true) {
-            SallyTheRClaw.setPosition(1);
-            wait(500);
-            SallyTheRClaw.setPosition(0);
-            isOpenR = false;
-
-        }
-        if (isOpenL == false && gamepad1.left_bumper == true) {
-            SallyTheLClaw.setPosition(1);
-            wait(500);
-            isOpenL = true;
+        if(gamepad2.y && intakeOn == true){
+            intake.setPower(0.00);
+            intakeOn = false;
         }
 
-        if (isOpenR == false && gamepad1.right_bumper == true) {
-            SallyTheRClaw.setPosition(1);
-            wait(500);
-            isOpenR = true;
+        //backwards
+        if(gamepad2.b){
+            intake.setPower(-1.00);
+            intakeOn = true;
+
         }
 
-        if(isTilt == false && gamepad1.x == true){
+        /*//intake.setPower(gamepad2. right_trigger);
+        if(gamepad1.right_bumper == true){
+            intake.setPower(1.00);
+        }*/
+
+        if(isTilt == false && gamepad2.x == true){
             tilt.setPosition(1); //FIND THE POSITION THIS HAS TO BE WHEN TESTING
             isTilt = true;
 
         }
-        if(isTilt == true && gamepad1.x == true){
+        if(isTilt == true && gamepad2.x == true){
             tilt.setPosition(0); //FIND THE POSITION THIS HAS TO BE WHEN TESTING
             isTilt = false;
         }
 
-        //launching the airplane:
-        if(gamepad1.y == true){
+        //launching the airplane with GAMEPAD 2:
+        if(gamepad1.left_bumper){
             airplane.setPosition(1); //1 goes opposite direction as -1
         }
 
