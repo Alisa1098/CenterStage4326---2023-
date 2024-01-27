@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOop", group="Iterative Opmode")
+@TeleOp(name="TeleOozzzrp", group="Iterative Opmode")
 public class Tele extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -62,6 +62,8 @@ public class Tele extends OpMode {
     private DcMotor backRight;
 
     private DcMotor lift;
+
+    private DcMotor lift2;
 
     private DcMotor intake;
     boolean intakeOn = false;
@@ -90,9 +92,9 @@ public class Tele extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
 
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
         /*motors[0] = frontLeft;
@@ -107,6 +109,8 @@ public class Tele extends OpMode {
 
         //Pully initializing - UNCOMMENT THIS ONCE A 5TH MOTOR IS CONNECTED TO THE CONTROL HUB
         lift = hardwareMap.get(DcMotor.class, "lift");
+
+        lift2 = hardwareMap.get(DcMotor.class, "lift2");
 
         //intake motor
         intake = hardwareMap.get(DcMotor.class, "intake");
@@ -179,20 +183,21 @@ public class Tele extends OpMode {
 
         // lift for the lift:
         lift.setPower((0.5 * ((double) gamepad2.right_trigger - (double) gamepad2.left_trigger)));
+        lift2.setPower((0.5 * ((double) gamepad2.right_trigger - (double) gamepad2.left_trigger)));
+
 
         //intake motor: might wanna trouble shoot this
         if(gamepad2.y && intakeOn == false){
-            intake.setPower(1.00);
+            intake.setPower(-1.00);
             intakeOn = true;
         }
-        if(gamepad2.y && intakeOn == true){
+        if(gamepad2.x && intakeOn == true){
             intake.setPower(0.00);
             intakeOn = false;
         }
-
         //backwards
         if(gamepad2.b){
-            intake.setPower(-1.00);
+            intake.setPower(1.00);
             intakeOn = true;
 
         }
