@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Autonomous(name="auton run", group="Iterative Opmode")
+@Autonomous(name="auton run YAY", group="Iterative Opmode")
 public class AutonRunPush extends LinearOpMode {
 
     //  CHECK THESE MEASUREMENTS!!
@@ -65,31 +65,24 @@ public class AutonRunPush extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotor.class, "fl");
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
-        backRight = hardwareMap.get(DcMotor.class, "br"); /*
+        backRight = hardwareMap.get(DcMotor.class, "br");
 
-       /* frontLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);*/
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
         //tilt servo initializing
         /*tilt = hardwareMap.get(Servo.class, "tilt");
 
-        //Pully initializing
-        //pully = hardwareMap.get(DcMotor.class, "lift");
-
-        // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized");
+        //lift initializing
+        //lift = hardwareMap.get(DcMotor.class, "lift");
 
         //grouping driving motors together*/
         motors.add(frontLeft);
         motors.add(frontRight);
         motors.add(backLeft);
         motors.add(backRight);
-/*
-        //copied this from henry's hardwareStart method - ask him what he wanted to do with this?
-        telemetry.addData("Object Creation", "Start");
-        telemetry.update(); */
 
         teamElementDetection = new TeamElementSubsystem(hardwareMap);
 
@@ -99,6 +92,7 @@ public class AutonRunPush extends LinearOpMode {
     }
 
     public void runOpMode() {
+        HardwareStart();
 
         while (!opModeIsActive() && !isStopRequested()) {
             //selecting alliance:
