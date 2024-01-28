@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Autonomous(name="auton run RED", group="Iterative Opmode")
+@Autonomous(name="auton run BLUE", group="Iterative Opmode")
 public class AutonRunBlue extends LinearOpMode {
 
         //  CHECK THESE MEASUREMENTS!!
@@ -112,11 +112,11 @@ public class AutonRunBlue extends LinearOpMode {
             if(element_zone == 1){
                 //zone 1 (left zone)
                 //distance from middle to the side zone is 13 inch
-                encoderDrive(4.0, .75, -20, "Backward");
-                encoderDrive(4.0, 0.75, 12.0, "Right");
+                encoderDrive(4.0, 0.5, 20, "Forward");
+                encoderDrive(4.0, 0.5, 12.0, "Left");
 
                 //reset position:
-                encoderDrive(4.0, 0.75, 5.0, "Forward");
+                encoderDrive(4.0, 0.5, 5.0, "Backward");
 
             }
             else if(element_zone == 2){
@@ -127,10 +127,11 @@ public class AutonRunBlue extends LinearOpMode {
                     --> the distance travel length = 47 - 18 = 30 inch
                     */
 
-                encoderDrive(4.0, .75, -30.0, "Backward");
+                encoderDrive(4.0, .5, 30.0, "Forward");
 
                 //reset position:
-                encoderDrive(4.0, .75, 5.0, "Forward");
+                encoderDrive(4.0, .5, 5.0, "Backward");
+                //stop(frontLeft,frontRight, backLeft, backRight);
 
 
             }
@@ -138,12 +139,13 @@ public class AutonRunBlue extends LinearOpMode {
                 //zone 3 (right zone)
 
                 //distance from middle to the side zone is 13 inch
-                encoderDrive(4.0, .75, -20.0, "Backward");
-                encoderDrive(4.0, .5, 12.0, "Left");
+                encoderDrive(4.0, .5, 20.0, "Forward");
+                encoderDrive(4.0, .5, 12.0, "Right");
 
                 //to get back to a forward position that wont knock over pixel placed later:
                 //want to turn 90 degrees right
-                encoderDrive(4.0, .5, 5.0, "Forward");
+                encoderDrive(4.0, .5, -5.0, "Backward");
+                stop();
             }
 
             //first add a wait function for the amount it takes to do the above? - might not be needed

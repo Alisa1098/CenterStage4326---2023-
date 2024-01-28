@@ -148,7 +148,7 @@ public class Tele extends OpMode {
     public void loop() {
         // DRIVING
 
-        //reduces powerof the robot:
+        //reduces power of the robot:
         if (gamepad1.b) {
             low_sens = true;
         } else if (gamepad1.a) {
@@ -165,10 +165,19 @@ public class Tele extends OpMode {
         turn = gamepad1.left_stick_x;
         strafe = -gamepad1.right_stick_x;
 
+        if(low_sens){
+            drive/=2;
+            turn/=2;
+            strafe/=2;
+
+        }
+
         double lfDrive = Range.clip(drive + turn - strafe, -1.0, 1.0);
         double lbDrive = Range.clip(drive + turn + strafe, -1.0, 1.0);
         double rfDrive = Range.clip(drive - turn + strafe, -1.0, 1.0);
         double rbDrive = Range.clip(drive - turn - strafe, -1.0, 1.0);
+
+
 
         /*
         ---WHEEL POWERS---
@@ -210,16 +219,21 @@ public class Tele extends OpMode {
         if(isTilt == false && gamepad2.x == true){
             tilt.setPosition(1); //FIND THE POSITION THIS HAS TO BE WHEN TESTING
             isTilt = true;
+            wait(1);
 
         }
         if(isTilt == true && gamepad2.x == true){
             tilt.setPosition(0); //FIND THE POSITION THIS HAS TO BE WHEN TESTING
             isTilt = false;
+
         }
 
         //launching the airplane with GAMEPAD 2:
         if(gamepad1.left_bumper){
             airplane.setPosition(1); //1 goes opposite direction as -1
+        }
+        if(gamepad1.right_bumper){
+            airplane.setPosition(-1);
         }
 
     }
