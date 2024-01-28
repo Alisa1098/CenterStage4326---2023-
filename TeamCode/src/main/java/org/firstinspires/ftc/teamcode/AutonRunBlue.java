@@ -38,8 +38,9 @@ public class AutonRunBlue extends LinearOpMode {
 
         private Servo tilt;
         boolean isTilt = false;
+        double pos = 1.00;
 
-        //do i need this:
+    //do i need this:
         boolean low_sens = false;
 
         //do i need this:
@@ -175,7 +176,8 @@ public class AutonRunBlue extends LinearOpMode {
             //version after placing pixel on board:
             //version after placing pixel in zones
 
-
+            //dropping pixel
+            tilt.setPosition(pos);
 
             //CAN ADD THE DROP AND PARK?
             //first add a wait function for the amount it takes to do the above

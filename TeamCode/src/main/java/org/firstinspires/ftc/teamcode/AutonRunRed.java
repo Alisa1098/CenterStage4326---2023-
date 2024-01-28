@@ -26,26 +26,21 @@ public class AutonRunRed extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
 
-    //uncomment if we decide to do the backdrop
-    private DcMotor pully;
-
-    //  IS IT POSSIBLE TO ADJUST THIS WITH THE ALLIANCE?
-    boolean isBackStage = false;
 
     private Servo tilt;
     boolean isTilt = false;
 
-    //do i need this:
-    boolean low_sens = false;
+    //CHANGE POS AFTER TESTING TO SEE WHAT IT SHOULD ACTUALLY BE CUZ THIS WOULD SPIN 360 DEGREES:
+    double pos = 1.00;
 
-    //do i need this:
     private final double MAX_CAR_POWER = .5;
 
     private ArrayList<DcMotor> motors = new ArrayList<DcMotor>();
 
+
     //initializing state
 
-    public int element_zone = 1;
+    public int element_zone;
 
     private TeamElementSubsystem teamElementDetection = null;
 
@@ -68,6 +63,8 @@ public class AutonRunRed extends LinearOpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
+
+        tilt = hardwareMap.get(Servo.class, "tilt");
 
         //tilt servo initializing
         /*tilt = hardwareMap.get(Servo.class, "tilt");
@@ -149,27 +146,14 @@ public class AutonRunRed extends LinearOpMode {
 
         //PLACING ON BACKBOARD:(could add the prev ifs but want to separate)
         //different between different alliances bc it would be mirror - imaged
-       /* if(curAlliance.equals("blue")) {
-            if (element_zone == 1) {
-                //currently
-            } else if (element_zone == 2) {
-
-            } else if (element_zone == 3) {
-
-            }
-        }
-        else if(curAlliance.equals("red")){
-            if (element_zone == 1) {
-                //left off
-            } else if (element_zone == 2) {
-
-            } else if (element_zone == 3) {
-
-            }*/
 
         //PARKING:
         //version after placing pixel on board:
         //version after placing pixel in zones
+
+        //release 2nd pre-loaded pixel:
+        tilt.setPosition(pos);
+
 
 
 
