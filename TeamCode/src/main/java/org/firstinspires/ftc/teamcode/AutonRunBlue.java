@@ -112,7 +112,7 @@ public class AutonRunBlue extends LinearOpMode {
             if(element_zone == 1){
                 //zone 1 (left zone)
                 //distance from middle to the side zone is 13 inch
-                encoderDrive(4.0, .75, 20, "Backward");
+                encoderDrive(4.0, .75, -20, "Backward");
                 encoderDrive(4.0, 0.75, 12.0, "Right");
 
                 //reset position:
@@ -127,7 +127,7 @@ public class AutonRunBlue extends LinearOpMode {
                     --> the distance travel length = 47 - 18 = 30 inch
                     */
 
-                encoderDrive(4.0, .75, 30.0, "Backward");
+                encoderDrive(4.0, .75, -30.0, "Backward");
 
                 //reset position:
                 encoderDrive(4.0, .75, 5.0, "Forward");
@@ -138,7 +138,7 @@ public class AutonRunBlue extends LinearOpMode {
                 //zone 3 (right zone)
 
                 //distance from middle to the side zone is 13 inch
-                encoderDrive(4.0, .75, 20.0, "Backward");
+                encoderDrive(4.0, .75, -20.0, "Backward");
                 encoderDrive(4.0, .5, 12.0, "Left");
 
                 //to get back to a forward position that wont knock over pixel placed later:
@@ -194,10 +194,10 @@ public class AutonRunBlue extends LinearOpMode {
         public void encoderDrive(double timeout, double power, double dist, String direc) {
             int target = frontLeft.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
             if (direc.equals("Forward") || direc.equals("Backward")) {
-                frontLeft.setTargetPosition(target);
+                frontLeft.setTargetPosition(-target);
                 backLeft.setTargetPosition(target);
-                frontRight.setTargetPosition(target);
-                backRight.setTargetPosition(target);
+                frontRight.setTargetPosition(-target);
+                backRight.setTargetPosition(-target);
                 //Center.setTargetPosition(target);
 
             }
