@@ -69,9 +69,9 @@ public class AutonRunBlue extends LinearOpMode {
             backLeft = hardwareMap.get(DcMotor.class, "bl");
             backRight = hardwareMap.get(DcMotor.class, "br");
 
-            frontLeft.setDirection(DcMotor.Direction.FORWARD);
-            frontRight.setDirection(DcMotor.Direction.REVERSE);
-            backLeft.setDirection(DcMotor.Direction.FORWARD);
+            frontLeft.setDirection(DcMotor.Direction.REVERSE);
+            frontRight.setDirection(DcMotor.Direction.FORWARD);
+            backLeft.setDirection(DcMotor.Direction.REVERSE);
             backRight.setDirection(DcMotor.Direction.REVERSE);
 
             //tilt servo initializing
@@ -194,10 +194,10 @@ public class AutonRunBlue extends LinearOpMode {
         public void encoderDrive(double timeout, double power, double dist, String direc) {
             int target = frontLeft.getCurrentPosition() + (int) (dist * COUNTS_PER_INCH);
             if (direc.equals("Forward") || direc.equals("Backward")) {
-                frontLeft.setTargetPosition(-target);
+                frontLeft.setTargetPosition(target);
                 backLeft.setTargetPosition(target);
-                frontRight.setTargetPosition(-target);
-                backRight.setTargetPosition(-target);
+                frontRight.setTargetPosition(target);
+                backRight.setTargetPosition(target);
                 //Center.setTargetPosition(target);
 
             }
