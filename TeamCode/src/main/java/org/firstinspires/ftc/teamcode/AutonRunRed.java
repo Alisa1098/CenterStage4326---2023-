@@ -8,11 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import java.util.ArrayList;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
-@Autonomous(name="auton run YAY", group="Iterative Opmode")
-public class AutonRunPush extends LinearOpMode {
+@Autonomous(name="auton run RED", group="Iterative Opmode")
+public class AutonRunRed extends LinearOpMode {
 
     //  CHECK THESE MEASUREMENTS!!
     static final double FEET_PER_METER = 3.28084;
@@ -54,7 +51,7 @@ public class AutonRunPush extends LinearOpMode {
 
     boolean togglePreview = true;
 
-    String curAlliance = "";
+    String curAlliance = "red";
 
     public void HardwareStart() {
 
@@ -95,20 +92,9 @@ public class AutonRunPush extends LinearOpMode {
         HardwareStart();
 
         while (!opModeIsActive() && !isStopRequested()) {
-            //selecting alliance:
-            telemetry.addData("Select Alliance (Gamepad1 X = Blue, Gamepad1 B = Red)", "");
-            telemetry.update();
 
-            if (gamepad1.x) {
-                curAlliance = "blue";
-            } else if (gamepad1.b) {
-                curAlliance = "red";
-            }
             //SET IF YOU ARE BACK STAGE OR FRONT STAGE HERE WITH THE BOOLEAN VARIABLE
-            // if () {isBackStage = }
-            // else if () {isBackStage = }
 
-            telemetry.addData("Current Alliance Selected  : ", curAlliance.toUpperCase());
             telemetry.update();
         }
 
