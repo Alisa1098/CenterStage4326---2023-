@@ -25,6 +25,7 @@ public class AutonRunRed extends LinearOpMode {
     private DcMotor frontRight;
     private DcMotor backLeft;
     private DcMotor backRight;
+    private DcMotor intake;
 
 
     private Servo tilt;
@@ -58,6 +59,7 @@ public class AutonRunRed extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
+        intake = hardwareMap.get(DcMotor.class, "intake");
 
         /*frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
@@ -89,19 +91,21 @@ public class AutonRunRed extends LinearOpMode {
         HardwareStart();
 
         while (!opModeIsActive() && !isStopRequested()) {
-
             //SET IF YOU ARE BACK STAGE OR FRONT STAGE HERE WITH THE BOOLEAN VARIABLE
-
             telemetry.update();
         }
+        telemetry.addData("Object", "Passed & waiting for start");
+        telemetry.update();
 
         waitForStart();
         //Telemetry telemetry = new Telemetry();
-        element_zone = teamElementDetection.elementDetection();
+        //element_zone = teamElementDetection.elementDetection();
+        encoderDrive(4.0, 0.5, 20, "Left");
+        intake.setPower(1.0);
 
         //set element_zone to intended zone for testing
         //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
-        if(element_zone == 1){
+        /*if(element_zone == 1){
             //zone 1 (left zone)
             //distance from middle to the side zone is 13 inch
             encoderDrive(4.0, .75, -20, "Backward");
@@ -110,8 +114,8 @@ public class AutonRunRed extends LinearOpMode {
             //reset position:
             encoderDrive(4.0, 0.75, 5.0, "Forward");
 
-        }
-        else if(element_zone == 2){
+        }*/
+        /*else if(element_zone == 2){
             //zone 2 (front zone)
 
                 /*  the length from back to the tape line is 47 3/4
@@ -119,14 +123,12 @@ public class AutonRunRed extends LinearOpMode {
                     --> the distance travel length = 47 - 18 = 30 inch
                     */
 
-            encoderDrive(4.0, .75, -30.0, "Backward");
+           /* encoderDrive(4.0, .75, -30.0, "Backward");
 
             //reset position:
             encoderDrive(4.0, .75, 5.0, "Forward");
-
-
-        }
-        else if(element_zone == 3){
+            */
+       /* else if(element_zone == 3){
             //zone 3 (right zone)
 
             //distance from middle to the side zone is 13 inch
@@ -136,7 +138,7 @@ public class AutonRunRed extends LinearOpMode {
             //to get back to a forward position that wont knock over pixel placed later:
             //want to turn 90 degrees right
             encoderDrive(4.0, .5, 5.0, "Forward");
-        }
+        }*/
 
         //first add a wait function for the amount it takes to do the above? - might not be needed
         //to drop the pixel:
@@ -152,7 +154,7 @@ public class AutonRunRed extends LinearOpMode {
         //version after placing pixel in zones
 
         //release 2nd pre-loaded pixel:
-        tilt.setPosition(pos);
+        //tilt.setPosition(pos);
 
 
 
@@ -164,8 +166,7 @@ public class AutonRunRed extends LinearOpMode {
         //if claw: open claw using servo
 
         //telling user that robot is waiting to start
-        telemetry.addData("Object", "Passed & waiting for start");
-        telemetry.update();
+
 
     }
 

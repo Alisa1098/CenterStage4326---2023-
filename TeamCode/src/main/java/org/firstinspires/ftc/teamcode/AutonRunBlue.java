@@ -58,6 +58,8 @@ public class AutonRunBlue extends LinearOpMode {
 
         String curAlliance = "blue";
 
+        private DcMotor intake;
+
         public void HardwareStart() {
 
             //hardware map:
@@ -73,6 +75,8 @@ public class AutonRunBlue extends LinearOpMode {
             frontRight.setDirection(DcMotor.Direction.FORWARD);
             backLeft.setDirection(DcMotor.Direction.REVERSE);
             backRight.setDirection(DcMotor.Direction.REVERSE);
+
+            intake = hardwareMap.get(DcMotor.class, "intake");
 
             //tilt servo initializing
         /*tilt = hardwareMap.get(Servo.class, "tilt");
@@ -102,10 +106,15 @@ public class AutonRunBlue extends LinearOpMode {
 
                 telemetry.update();
             }
+            //telling user that robot is waiting to start
+            telemetry.addData("Object", "Passed & waiting for start");
+            telemetry.update();
 
             waitForStart();
+            encoderDrive(4.0, 0.5, 20, "Left");
+            intake.setPower(1.0);
             //Telemetry telemetry = new Telemetry();
-            element_zone = teamElementDetection.elementDetection();
+           /* element_zone = teamElementDetection.elementDetection();
 
             //set element_zone to intended zone for testing
             //CHECK IF THESE MATCH UP WITH THE ZONES (MAYBE 1 AND 3 ARE SWITCHED)
@@ -117,6 +126,8 @@ public class AutonRunBlue extends LinearOpMode {
 
                 //reset position:
                 encoderDrive(4.0, 0.5, 5.0, "Backward");
+                intake.setPower(-1.0);
+
 
             }
             else if(element_zone == 2){
@@ -127,11 +138,12 @@ public class AutonRunBlue extends LinearOpMode {
                     --> the distance travel length = 47 - 18 = 30 inch
                     */
 
-                encoderDrive(4.0, .5, 30.0, "Forward");
+               /* encoderDrive(4.0, .5, 30.0, "Forward");
 
                 //reset position:
                 encoderDrive(4.0, .5, 5.0, "Backward");
                 //stop(frontLeft,frontRight, backLeft, backRight);
+                intake.setPower(-1.0);
 
 
             }
@@ -145,8 +157,8 @@ public class AutonRunBlue extends LinearOpMode {
                 //to get back to a forward position that wont knock over pixel placed later:
                 //want to turn 90 degrees right
                 encoderDrive(4.0, .5, -5.0, "Backward");
-                stop();
-            }
+                intake.setPower(-1.0);
+            }*/
 
             //first add a wait function for the amount it takes to do the above? - might not be needed
             //to drop the pixel:
@@ -179,7 +191,7 @@ public class AutonRunBlue extends LinearOpMode {
             //version after placing pixel in zones
 
             //dropping pixel
-            tilt.setPosition(pos);
+            //tilt.setPosition(pos);
 
             //CAN ADD THE DROP AND PARK?
             //first add a wait function for the amount it takes to do the above
@@ -187,9 +199,7 @@ public class AutonRunBlue extends LinearOpMode {
             //if box: lift with lift motor and tilt the box with servo
             //if claw: open claw using servo
 
-            //telling user that robot is waiting to start
-            telemetry.addData("Object", "Passed & waiting for start");
-            telemetry.update();
+
 
         }
 

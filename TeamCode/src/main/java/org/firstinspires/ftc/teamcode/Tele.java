@@ -192,7 +192,7 @@ public class Tele extends OpMode {
 
         // lift for the lift:
         lift.setPower((0.5 * ((double) gamepad2.right_trigger - (double) gamepad2.left_trigger)));
-        lift2.setPower((0.5 * ((double) gamepad2.right_trigger - (double) gamepad2.left_trigger)));
+        lift2.setPower(-(0.5 * ((double) gamepad2.right_trigger - (double) gamepad2.left_trigger)));
 
 
         //intake motor: might wanna trouble shoot this
